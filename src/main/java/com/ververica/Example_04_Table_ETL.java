@@ -13,7 +13,7 @@ import static org.apache.flink.table.api.Expressions.jsonObject;
 import static org.apache.flink.table.api.Expressions.row;
 import static org.apache.flink.table.api.Expressions.timestampDiff;
 
-public class Example_4_Table_ETL {
+public class Example_04_Table_ETL {
 
   public static void main(String[] args) {
     TableEnvironment env = TableEnvironment.create(EnvironmentSettings.inStreamingMode());

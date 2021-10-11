@@ -7,7 +7,7 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 
-public class Example_7_Table_Deduplicate_Join {
+public class Example_07_Table_Deduplicate_Join {
 
   public static void main(String[] args) {
     StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();

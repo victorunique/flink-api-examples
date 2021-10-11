@@ -15,7 +15,7 @@ import org.apache.flink.types.Row;
 
 import java.time.ZoneId;
 
-public class Example_9_Table_Temporal_Join {
+public class Example_09_Table_Temporal_Join {
 
   public static void main(String[] args) {
     StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();

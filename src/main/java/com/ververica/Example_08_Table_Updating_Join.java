@@ -11,7 +11,7 @@ import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.table.connector.ChangelogMode;
 import org.apache.flink.types.Row;
 
-public class Example_8_Table_Updating_Join {
+public class Example_08_Table_Updating_Join {
 
   public static void main(String[] args) {
     StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();

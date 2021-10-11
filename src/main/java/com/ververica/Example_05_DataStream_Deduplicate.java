@@ -13,7 +13,7 @@ import org.apache.flink.util.Collector;
 
 import java.time.Duration;
 
-public class Example_5_DataStream_Deduplicate {
+public class Example_05_DataStream_Deduplicate {
 
   public static void main(String[] args) throws Exception {
     StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();

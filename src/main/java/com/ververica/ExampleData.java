@@ -32,8 +32,9 @@ public class ExampleData {
         Row.ofKind(RowKind.INSERT, 12L, "Alice", LocalDate.of(1984, 3, 12)),
         Row.ofKind(RowKind.INSERT, 32L, "Bob", LocalDate.of(1990, 10, 14)),
         Row.ofKind(RowKind.INSERT, 7L, "Kyle", LocalDate.of(1979, 2, 23)),
-        Row.ofKind(RowKind.DELETE, 32L, "Bob", LocalDate.of(1990, 10, 14)),
-        Row.ofKind(RowKind.UPDATE_AFTER, 7L, "Kylie", LocalDate.of(1984, 3, 12))
+        Row.ofKind(RowKind.UPDATE_AFTER, 7L, "Kylie", LocalDate.of(1984, 3, 12)),
+        Row.ofKind(RowKind.UPDATE_AFTER, 12L, "Aliceson", LocalDate.of(1984, 3, 12)),
+        Row.ofKind(RowKind.INSERT, 77L, "Robert", LocalDate.of(1984, 3, 12))
       };
 
   public static final Row[] CUSTOMERS_WITH_TEMPORAL_UPDATES =

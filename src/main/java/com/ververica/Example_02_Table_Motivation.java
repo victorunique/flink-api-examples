@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 import static org.apache.flink.table.api.Expressions.row;
 
-public class Example_2_Table_Motivation {
+public class Example_02_Table_Motivation {
 
   public static void main(String[] args) {
     TableEnvironment env = TableEnvironment.create(EnvironmentSettings.inStreamingMode());

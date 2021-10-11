@@ -17,7 +17,7 @@ import org.apache.flink.util.Collector;
 import java.time.Duration;
 import java.util.Iterator;
 
-public class Example_6_DataStream_Join {
+public class Example_06_DataStream_Join {
 
   public static void main(String[] args) throws Exception {
     StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
