@@ -8,6 +8,7 @@ import org.apache.flink.table.api.TableEnvironment;
 
 import java.time.ZoneId;
 
+/** Table API end-to-end example with time-versioned joins. */
 public class Example_10_Table_Temporal_Join_Pure {
 
   public static void main(String[] args) {
@@ -16,6 +17,7 @@ public class Example_10_Table_Temporal_Join_Pure {
     config.getConfiguration().set(CoreOptions.DEFAULT_PARALLELISM, 1); // due to little data
     config.setLocalTimeZone(ZoneId.of("UTC"));
 
+    // use descriptor API to use dedicated table connectors
     tableEnv.createTemporaryTable("Customers", TopicDescriptors.CUSTOMERS_DESCRIPTOR);
     tableEnv.createTemporaryTable("Transactions", TopicDescriptors.TRANSACTIONS_DESCRIPTOR);
 

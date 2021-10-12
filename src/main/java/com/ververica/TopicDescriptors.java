@@ -27,8 +27,8 @@ public class TopicDescriptors {
       TableDescriptor.forConnector("kafka")
           .schema(
               Schema.newBuilder()
-                  .column("t_id", DataTypes.BIGINT().notNull())
                   .column("t_time", DataTypes.TIMESTAMP_LTZ(3))
+                  .column("t_id", DataTypes.BIGINT().notNull())
                   .column("t_customer_id", DataTypes.BIGINT().notNull())
                   .column("t_amount", DataTypes.DECIMAL(5, 2))
                   .watermark("t_time", "t_time - INTERVAL '10' SECONDS")

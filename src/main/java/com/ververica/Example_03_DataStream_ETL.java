@@ -11,12 +11,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.time.LocalDate;
 import java.time.Period;
 
+/** Use arbitrary libraries to perform streaming ETL i.e. convert records into JSON. */
 public class Example_03_DataStream_ETL {
 
   public static void main(String[] args) throws Exception {
     StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
     env.fromElements(ExampleData.CUSTOMERS)
+        // use process function to access streaming building blocks
         .process(
             new ProcessFunction<Customer, String>() {
               @Override

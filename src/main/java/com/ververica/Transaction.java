@@ -11,8 +11,8 @@ import java.time.Instant;
 @AllArgsConstructor
 @ToString
 public class Transaction {
-  public long t_id;
   public Instant t_time;
+  public long t_id;
   public long t_customer_id;
   public BigDecimal t_amount;
 }

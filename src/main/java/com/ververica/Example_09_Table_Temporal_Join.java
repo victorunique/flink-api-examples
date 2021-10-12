@@ -15,6 +15,7 @@ import org.apache.flink.types.Row;
 
 import java.time.ZoneId;
 
+/** Perform the materialized view maintenance smarter by using time-versioned joins. */
 public class Example_09_Table_Temporal_Join {
 
   public static void main(String[] args) {
@@ -24,27 +25,7 @@ public class Example_09_Table_Temporal_Join {
     TableConfig config = tableEnv.getConfig();
     config.setLocalTimeZone(ZoneId.of("UTC"));
 
-    DataStream<Row> customerStream =
-        env.fromElements(ExampleData.CUSTOMERS_WITH_TEMPORAL_UPDATES)
-            .returns(
-                Types.ROW_NAMED(
-                    new String[] {"c_update_time", "c_id", "c_name", "c_birthday"},
-                    Types.INSTANT,
-                    Types.LONG,
-                    Types.STRING,
-                    Types.LOCAL_DATE));
-
-    tableEnv.createTemporaryView(
-        "Customers",
-        tableEnv.fromChangelogStream(
-            customerStream,
-            Schema.newBuilder()
-                .columnByExpression("c_rowtime", "CAST(c_update_time AS TIMESTAMP_LTZ(3))")
-                .primaryKey("c_id")
-                .watermark("c_rowtime", "c_rowtime - INTERVAL '10' SECONDS")
-                .build(),
-            ChangelogMode.upsert()));
-
+    // read transactions
     KafkaSource<Transaction> transactionSource =
         KafkaSource.<Transaction>builder()
             .setBootstrapServers("localhost:9092")
@@ -72,6 +53,29 @@ public class Example_09_Table_Temporal_Join {
                 + "   FROM Transactions)\n"
                 + "WHERE row_num = 1");
     tableEnv.createTemporaryView("DeduplicateTransactions", deduplicateTransactions);
+
+    // use a customer changelog with timestamps
+    DataStream<Row> customerStream =
+        env.fromElements(ExampleData.CUSTOMERS_WITH_TEMPORAL_UPDATES)
+            .returns(
+                Types.ROW_NAMED(
+                    new String[] {"c_update_time", "c_id", "c_name", "c_birthday"},
+                    Types.INSTANT,
+                    Types.LONG,
+                    Types.STRING,
+                    Types.LOCAL_DATE));
+
+    // make it a temporal view
+    tableEnv.createTemporaryView(
+        "Customers",
+        tableEnv.fromChangelogStream(
+            customerStream,
+            Schema.newBuilder()
+                .columnByExpression("c_rowtime", "CAST(c_update_time AS TIMESTAMP_LTZ(3))")
+                .primaryKey("c_id")
+                .watermark("c_rowtime", "c_rowtime - INTERVAL '10' SECONDS")
+                .build(),
+            ChangelogMode.upsert()));
 
     tableEnv
         .executeSql(

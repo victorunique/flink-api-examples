@@ -13,10 +13,12 @@ import static org.apache.flink.table.api.Expressions.jsonObject;
 import static org.apache.flink.table.api.Expressions.row;
 import static org.apache.flink.table.api.Expressions.timestampDiff;
 
+/** Use built-in functions to perform streaming ETL i.e. convert records into JSON. */
 public class Example_04_Table_ETL {
 
   public static void main(String[] args) {
     TableEnvironment env = TableEnvironment.create(EnvironmentSettings.inStreamingMode());
+
     env.fromValues(
             row(12L, "Alice", LocalDate.of(1984, 3, 12)),
             row(32L, "Bob", LocalDate.of(1990, 10, 14)),

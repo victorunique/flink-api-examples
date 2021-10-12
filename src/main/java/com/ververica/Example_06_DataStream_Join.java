@@ -17,13 +17,16 @@ import org.apache.flink.util.Collector;
 import java.time.Duration;
 import java.util.Iterator;
 
+/** Use Flink's state to perform efficient record joining based on business requirements. */
 public class Example_06_DataStream_Join {
 
   public static void main(String[] args) throws Exception {
     StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
+    // switch to batch mode on demand
     // env.setRuntimeMode(RuntimeExecutionMode.BATCH);
 
+    // read transactions
     KafkaSource<Transaction> transactionSource =
         KafkaSource.<Transaction>builder()
             .setBootstrapServers("localhost:9092")
@@ -36,6 +39,7 @@ public class Example_06_DataStream_Join {
     DataStream<Transaction> transactionStream =
         env.fromSource(transactionSource, WatermarkStrategy.noWatermarks(), "Transactions");
 
+    // deduplicate transactions
     DataStream<Transaction> deduplicateStream =
         transactionStream
             .keyBy(t -> t.t_id)
@@ -79,6 +83,7 @@ public class Example_06_DataStream_Join {
 
     DataStream<Customer> customerStream = env.fromElements(ExampleData.CUSTOMERS);
 
+    // join transactions and customers
     customerStream
         .connect(deduplicateStream)
         .keyBy(c -> c.c_id, t -> t.t_customer_id)
@@ -107,6 +112,7 @@ public class Example_06_DataStream_Join {
                   throws Exception {
                 customer.update(c);
                 Iterator<Transaction> txs = transactions.get().iterator();
+                // buffer transactions if the other stream is not ready yet
                 if (!txs.hasNext()) {
                   performJoin(out, c, txs);
                 }
@@ -120,6 +126,7 @@ public class Example_06_DataStream_Join {
                   throws Exception {
                 transactions.add(tx);
                 Customer c = customer.value();
+                // buffer customer if the other stream is not ready yet
                 if (customer.value() != null) {
                   performJoin(out, c, transactions.get().iterator());
                 }

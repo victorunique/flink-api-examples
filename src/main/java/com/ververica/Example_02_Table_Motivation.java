@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 import static org.apache.flink.table.api.Expressions.row;
 
+/** Basic example of generating data and printing it. */
 public class Example_02_Table_Motivation {
 
   public static void main(String[] args) {

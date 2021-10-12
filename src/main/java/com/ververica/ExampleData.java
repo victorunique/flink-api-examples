@@ -12,12 +12,12 @@ public class ExampleData {
   public static final Transaction[] TRANSACTIONS =
       new Transaction[] {
         new Transaction(
-            1L, Instant.parse("2021-10-08T12:33:12.000Z"), 12, new BigDecimal("325.12")),
-        new Transaction(2L, Instant.parse("2021-10-10T08:00:00.000Z"), 7, new BigDecimal("13.99")),
-        new Transaction(2L, Instant.parse("2021-10-10T08:00:00.000Z"), 7, new BigDecimal("13.99")),
-        new Transaction(3L, Instant.parse("2021-10-14T17:04:00.000Z"), 12, new BigDecimal("52.48")),
-        new Transaction(4L, Instant.parse("2021-10-14T17:06:00.000Z"), 32, new BigDecimal("26.11")),
-        new Transaction(5L, Instant.parse("2021-10-14T18:23:00.000Z"), 32, new BigDecimal("22.03"))
+            Instant.parse("2021-10-08T12:33:12.000Z"), 1L, 12, new BigDecimal("325.12")),
+        new Transaction(Instant.parse("2021-10-10T08:00:00.000Z"), 2L, 7, new BigDecimal("13.99")),
+        new Transaction(Instant.parse("2021-10-10T08:00:00.000Z"), 2L, 7, new BigDecimal("13.99")),
+        new Transaction(Instant.parse("2021-10-14T17:04:00.000Z"), 3L, 12, new BigDecimal("52.48")),
+        new Transaction(Instant.parse("2021-10-14T17:06:00.000Z"), 4L, 32, new BigDecimal("26.11")),
+        new Transaction(Instant.parse("2021-10-14T18:23:00.000Z"), 5L, 32, new BigDecimal("22.03"))
       };
 
   public static final Customer[] CUSTOMERS =

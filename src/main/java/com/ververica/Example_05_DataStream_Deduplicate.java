@@ -13,11 +13,13 @@ import org.apache.flink.util.Collector;
 
 import java.time.Duration;
 
+/** Use Flink's state to perform efficient record deduplication. */
 public class Example_05_DataStream_Deduplicate {
 
   public static void main(String[] args) throws Exception {
     StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
+    // set up a Kafka source
     KafkaSource<Transaction> transactionSource =
         KafkaSource.<Transaction>builder()
             .setBootstrapServers("localhost:9092")
@@ -34,6 +36,7 @@ public class Example_05_DataStream_Deduplicate {
         .process(
             new KeyedProcessFunction<Long, Transaction, Transaction>() {
 
+              // use Flink's managed keyed state
               ValueState<Transaction> seen;
 
               @Override
@@ -51,6 +54,7 @@ public class Example_05_DataStream_Deduplicate {
                   throws Exception {
                 if (seen.value() == null) {
                   seen.update(transaction);
+                  // use timers to clean up state
                   context
                       .timerService()
                       .registerProcessingTimeTimer(
