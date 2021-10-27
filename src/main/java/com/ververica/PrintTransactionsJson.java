@@ -5,11 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static com.ververica.Utils.getMapper;
 
+/** Utilities to insert transactions dynamically into Kafka during a demo. */
 public class PrintTransactionsJson {
-
-  // bin/zookeeper-server-start.sh config/zookeeper.properties &
-
-  // bin/kafka-server-start.sh config/server.properties &
 
   // bin/kafka-topics.sh --create --topic transactions --bootstrap-server localhost:9092
   // --partitions=1 --replication-factor=1 &
