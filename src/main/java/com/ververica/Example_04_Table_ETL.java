@@ -7,11 +7,7 @@ import org.apache.flink.table.expressions.TimePointUnit;
 
 import java.time.LocalDate;
 
-import static org.apache.flink.table.api.Expressions.$;
-import static org.apache.flink.table.api.Expressions.currentDate;
-import static org.apache.flink.table.api.Expressions.jsonObject;
-import static org.apache.flink.table.api.Expressions.row;
-import static org.apache.flink.table.api.Expressions.timestampDiff;
+import static org.apache.flink.table.api.Expressions.*;
 
 /** Use built-in functions to perform streaming ETL i.e. convert records into JSON. */
 public class Example_04_Table_ETL {
@@ -29,7 +25,7 @@ public class Example_04_Table_ETL {
                 JsonOnNull.NULL,
                 "name",
                 $("c_name"),
-                "birth_year",
+                "age",
                 timestampDiff(TimePointUnit.YEAR, $("c_birthday"), currentDate())))
         .execute()
         .print();

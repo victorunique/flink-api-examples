@@ -54,8 +54,9 @@ public class Example_08_Table_Updating_Join {
     // and thus perform materialized view maintenance
     tableEnv
         .executeSql(
-            "SELECT c_name, CAST(t_amount AS DECIMAL(5, 2))\n"
-                + "FROM Customers LEFT JOIN (SELECT DISTINCT * FROM Transactions) ON c_id = t_customer_id")
+            "SELECT c_name, t_amount\n"
+                + "FROM Customers\n"
+                + "LEFT JOIN (SELECT DISTINCT * FROM Transactions) ON c_id = t_customer_id")
         .print();
   }
 }

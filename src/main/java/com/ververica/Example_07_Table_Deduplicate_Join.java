@@ -39,7 +39,8 @@ public class Example_07_Table_Deduplicate_Join {
     tableEnv
         .executeSql(
             "SELECT c_name, CAST(t_amount AS DECIMAL(5, 2))\n"
-                + "FROM Customers JOIN (SELECT DISTINCT * FROM Transactions) ON c_id = t_customer_id")
+                + "FROM Customers\n"
+                + "JOIN (SELECT DISTINCT * FROM Transactions) ON c_id = t_customer_id")
         .print();
   }
 }

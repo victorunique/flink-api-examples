@@ -49,7 +49,8 @@ public class Example_09_Table_Temporal_Join {
         tableEnv.sqlQuery(
             "SELECT t_id, t_rowtime, t_customer_id, t_amount\n"
                 + "FROM (\n"
-                + "   SELECT *, ROW_NUMBER() OVER (PARTITION BY t_id ORDER BY t_rowtime) AS row_num\n"
+                + "   SELECT *,\n"
+                + "      ROW_NUMBER() OVER (PARTITION BY t_id ORDER BY t_rowtime) AS row_num\n"
                 + "   FROM Transactions)\n"
                 + "WHERE row_num = 1");
     tableEnv.createTemporaryView("DeduplicateTransactions", deduplicateTransactions);
@@ -79,8 +80,10 @@ public class Example_09_Table_Temporal_Join {
 
     tableEnv
         .executeSql(
-            "SELECT t_rowtime, c_rowtime, t_id, c_name, CAST(t_amount AS DECIMAL(5, 2)) AS t_amount\n"
-                + "FROM DeduplicateTransactions LEFT JOIN Customers FOR SYSTEM_TIME AS OF t_rowtime ON c_id = t_customer_id")
+            "SELECT t_rowtime, c_rowtime, t_id, c_name, t_amount\n"
+                + "FROM DeduplicateTransactions\n"
+                + "LEFT JOIN Customers FOR SYSTEM_TIME AS OF t_rowtime\n"
+                + "   ON c_id = t_customer_id")
         .print();
   }
 }
