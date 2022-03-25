@@ -47,6 +47,16 @@ public class Example_11_Data_Generation {
     // rowDataStream.executeAndCollect().forEachRemaining(System.out::println);
 
     // -- Switch to DataStream API using regular Java objects (i.e. POJOs)
+
+    // Note that the POJO is analyzed using reflection and the type system of the Table API.
+
+    // Make sure that the table's schema (names and data types) matches with the POJO.
+    // The conversion classes must be supported e.g. TIMESTAMP_LTZ -> java.time.Instant is supported
+    // but DATE -> java.util.Date is not.
+
+    // The mapping happens based on name and implicit casts are inserted where appropriate.
+    // If the automatic analyzing does not work, use toDataStream(Table, DataType).
+
     DataStream<CustomerEvent> pojoDataStream = tableEnv.toDataStream(table, CustomerEvent.class);
     pojoDataStream.executeAndCollect().forEachRemaining(System.out::println);
   }
